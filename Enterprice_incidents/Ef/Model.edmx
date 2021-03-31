@@ -1,0 +1,600 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище Enterprice_incidents__Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Incident">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdType" Type="int" />
+          <Property Name="IncidentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Incident_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ImportanceOfIncident" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Incidents_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdIncident" Type="int" Nullable="false" />
+          <Property Name="IdWorker" Type="int" />
+          <Property Name="DateOfIncident" Type="datetime" Nullable="false" />
+          <Property Name="IncidentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImportanceOfIncident" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salary" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="_IsCanUseTherminal" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdGender" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="IdPost" Type="int" Nullable="false" />
+          <Property Name="FName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nchar" MaxLength="11" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Enterprice_incidents.dbo.View_Incidents" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="View_Incidents">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FName" />
+            <PropertyRef Name="SName" />
+            <PropertyRef Name="IncidentName" />
+            <PropertyRef Name="ImportanceOfIncident" />
+            <PropertyRef Name="DateOfIncident" />
+            <PropertyRef Name="IncidentTypeId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IncidentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImportanceOfIncident" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="DateOfIncident" Type="datetime" Nullable="false" />
+          <Property Name="IncidentTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Incident_Incident_Type">
+          <End Role="Incident_Type" Type="Self.Incident_Type" Multiplicity="0..1" />
+          <End Role="Incident" Type="Self.Incident" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Incident_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incident">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Incidents_History_Incident">
+          <End Role="Incident" Type="Self.Incident" Multiplicity="1" />
+          <End Role="Incidents_History" Type="Self.Incidents_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Incident">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incidents_History">
+              <PropertyRef Name="IdIncident" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Incidents_History_Worker">
+          <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
+          <End Role="Incidents_History" Type="Self.Incidents_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incidents_History">
+              <PropertyRef Name="IdWorker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Worker_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="IdGender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Worker_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Хранилище Enterprice_incidents__ModelContainer">
+          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Incident" EntityType="Self.Incident" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Incident_Type" EntityType="Self.Incident_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Incidents_History" EntityType="Self.Incidents_History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_Incidents" EntityType="Self.View_Incidents" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Incidents].[Id] AS [Id], 
+    [View_Incidents].[FName] AS [FName], 
+    [View_Incidents].[SName] AS [SName], 
+    [View_Incidents].[LName] AS [LName], 
+    [View_Incidents].[IncidentName] AS [IncidentName], 
+    [View_Incidents].[ImportanceOfIncident] AS [ImportanceOfIncident], 
+    [View_Incidents].[DateOfIncident] AS [DateOfIncident], 
+    [View_Incidents].[IncidentTypeId] AS [IncidentTypeId]
+    FROM [dbo].[View_Incidents] AS [View_Incidents]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Incident_Incident_Type" Association="Self.FK_Incident_Incident_Type">
+            <End Role="Incident_Type" EntitySet="Incident_Type" />
+            <End Role="Incident" EntitySet="Incident" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Incidents_History_Incident" Association="Self.FK_Incidents_History_Incident">
+            <End Role="Incident" EntitySet="Incident" />
+            <End Role="Incidents_History" EntitySet="Incidents_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Incidents_History_Worker" Association="Self.FK_Incidents_History_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="Incidents_History" EntitySet="Incidents_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Worker_Gender" Association="Self.FK_Worker_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Worker" EntitySet="Worker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Worker_Post" Association="Self.FK_Worker_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Worker" EntitySet="Worker" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Enterprice_incidents__Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Gender1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="Self.FK_Worker_Gender" FromRole="Gender" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Incident">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdType" Type="Int32" />
+          <Property Name="IncidentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Incident_Type" Relationship="Self.FK_Incident_Incident_Type" FromRole="Incident" ToRole="Incident_Type" />
+          <NavigationProperty Name="Incidents_History" Relationship="Self.FK_Incidents_History_Incident" FromRole="Incident" ToRole="Incidents_History" />
+        </EntityType>
+        <EntityType Name="Incident_Type">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ImportanceOfIncident" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Incident" Relationship="Self.FK_Incident_Incident_Type" FromRole="Incident_Type" ToRole="Incident" />
+        </EntityType>
+        <EntityType Name="Incidents_History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdIncident" Type="Int32" Nullable="false" />
+          <Property Name="IdWorker" Type="Int32" />
+          <Property Name="DateOfIncident" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IncidentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImportanceOfIncident" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Incident" Relationship="Self.FK_Incidents_History_Incident" FromRole="Incidents_History" ToRole="Incident" />
+          <NavigationProperty Name="Worker" Relationship="Self.FK_Incidents_History_Worker" FromRole="Incidents_History" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="C_IsCanUseTherminal" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Worker" Relationship="Self.FK_Worker_Post" FromRole="Post" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdGender" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="IdPost" Type="Int32" Nullable="false" />
+          <Property Name="FName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK_Worker_Gender" FromRole="Worker" ToRole="Gender" />
+          <NavigationProperty Name="Incidents_History" Relationship="Self.FK_Incidents_History_Worker" FromRole="Worker" ToRole="Incidents_History" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Worker_Post" FromRole="Worker" ToRole="Post" />
+        </EntityType>
+        <Association Name="FK_Worker_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="IdGender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Incident_Incident_Type">
+          <End Role="Incident_Type" Type="Self.Incident_Type" Multiplicity="0..1" />
+          <End Role="Incident" Type="Self.Incident" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Incident_Type">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incident">
+              <PropertyRef Name="IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Incidents_History_Incident">
+          <End Role="Incident" Type="Self.Incident" Multiplicity="1" />
+          <End Role="Incidents_History" Type="Self.Incidents_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Incident">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incidents_History">
+              <PropertyRef Name="IdIncident" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Incidents_History_Worker">
+          <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
+          <End Role="Incidents_History" Type="Self.Incidents_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Incidents_History">
+              <PropertyRef Name="IdWorker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Worker_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Enterprice_incidents__Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Gender" EntityType="Self.Gender" />
+          <EntitySet Name="Incident" EntityType="Self.Incident" />
+          <EntitySet Name="Incident_Type" EntityType="Self.Incident_Type" />
+          <EntitySet Name="Incidents_History" EntityType="Self.Incidents_History" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Worker" EntityType="Self.Worker" />
+          <AssociationSet Name="FK_Worker_Gender" Association="Self.FK_Worker_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Worker" EntitySet="Worker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Incident_Incident_Type" Association="Self.FK_Incident_Incident_Type">
+            <End Role="Incident_Type" EntitySet="Incident_Type" />
+            <End Role="Incident" EntitySet="Incident" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Incidents_History_Incident" Association="Self.FK_Incidents_History_Incident">
+            <End Role="Incident" EntitySet="Incident" />
+            <End Role="Incidents_History" EntitySet="Incidents_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Incidents_History_Worker" Association="Self.FK_Incidents_History_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="Incidents_History" EntitySet="Incidents_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Worker_Post" Association="Self.FK_Worker_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Worker" EntitySet="Worker" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Enterprice_incidents__Model.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Enterprice_incidents__Model.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="View_Incidents" EntityType="Enterprice_incidents__Model.View_Incidents" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="View_Incidents">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FName" />
+            <PropertyRef Name="SName" />
+            <PropertyRef Name="ImportanceOfIncident" />
+            <PropertyRef Name="DateOfIncident" />
+            <PropertyRef Name="IncidentName" />
+            <PropertyRef Name="IncidentTypeId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImportanceOfIncident" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfIncident" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IncidentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IncidentTypeId" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Enterprice_incidents__ModelContainer" CdmEntityContainer="Enterprice_incidents__Entities">
+          <EntitySetMapping Name="Gender">
+            <EntityTypeMapping TypeName="Enterprice_incidents__Model.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Gender1" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Incident">
+            <EntityTypeMapping TypeName="Enterprice_incidents__Model.Incident">
+              <MappingFragment StoreEntitySet="Incident">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="IncidentName" ColumnName="IncidentName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Incident_Type">
+            <EntityTypeMapping TypeName="Enterprice_incidents__Model.Incident_Type">
+              <MappingFragment StoreEntitySet="Incident_Type">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ImportanceOfIncident" ColumnName="ImportanceOfIncident" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Incidents_History">
+            <EntityTypeMapping TypeName="Enterprice_incidents__Model.Incidents_History">
+              <MappingFragment StoreEntitySet="Incidents_History">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdIncident" ColumnName="IdIncident" />
+                <ScalarProperty Name="IdWorker" ColumnName="IdWorker" />
+                <ScalarProperty Name="DateOfIncident" ColumnName="DateOfIncident" />
+                <ScalarProperty Name="IncidentName" ColumnName="IncidentName" />
+                <ScalarProperty Name="ImportanceOfIncident" ColumnName="ImportanceOfIncident" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="Enterprice_incidents__Model.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PostName" ColumnName="PostName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="C_IsCanUseTherminal" ColumnName="_IsCanUseTherminal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Enterprice_incidents__Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Worker">
+            <EntityTypeMapping TypeName="Enterprice_incidents__Model.Worker">
+              <MappingFragment StoreEntitySet="Worker">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdGender" ColumnName="IdGender" />
+                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="SName" ColumnName="SName" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище Enterprice_incidents__Model.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище Enterprice_incidents__Model.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище Enterprice_incidents__Model.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище Enterprice_incidents__Model.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Enterprice_incidents__Model.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище Enterprice_incidents__Model.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Enterprice_incidents__Model.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище Enterprice_incidents__Model.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище Enterprice_incidents__Model.sp_upgraddiagrams" />
+          <EntitySetMapping Name="View_Incidents">
+            <EntityTypeMapping TypeName="Enterprice_incidents__Model.View_Incidents">
+              <MappingFragment StoreEntitySet="View_Incidents">
+                <ScalarProperty Name="IncidentTypeId" ColumnName="IncidentTypeId" />
+                <ScalarProperty Name="IncidentName" ColumnName="IncidentName" />
+                <ScalarProperty Name="DateOfIncident" ColumnName="DateOfIncident" />
+                <ScalarProperty Name="ImportanceOfIncident" ColumnName="ImportanceOfIncident" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="SName" ColumnName="SName" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

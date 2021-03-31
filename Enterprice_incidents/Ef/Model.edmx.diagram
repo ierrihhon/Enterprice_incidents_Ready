@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c80f30e694a14a259647c4fb964ce992" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="Enterprice_incidents__Model.View_Incidents" Width="1.5" PointX="3.5" PointY="0.75" />
+        <EntityTypeShape EntityType="Enterprice_incidents__Model.Gender" Width="1.5" PointX="9.625" PointY="0.75" />
+        <EntityTypeShape EntityType="Enterprice_incidents__Model.Incident" Width="1.5" PointX="3.625" PointY="4.375" />
+        <EntityTypeShape EntityType="Enterprice_incidents__Model.Incident_Type" Width="1.5" PointX="1.125" PointY="4.375" />
+        <AssociationConnector Association="Enterprice_incidents__Model.FK_Incident_Incident_Type" />
+        <EntityTypeShape EntityType="Enterprice_incidents__Model.Incidents_History" Width="1.5" PointX="5.75" PointY="4.125" />
+        <AssociationConnector Association="Enterprice_incidents__Model.FK_Incidents_History_Incident" />
+        <EntityTypeShape EntityType="Enterprice_incidents__Model.Post" Width="1.5" PointX="6.75" PointY="0.5" />
+        <EntityTypeShape EntityType="Enterprice_incidents__Model.Worker" Width="1.5" PointX="8.25" PointY="3.25" />
+        <AssociationConnector Association="Enterprice_incidents__Model.FK_Worker_Gender" />
+        <AssociationConnector Association="Enterprice_incidents__Model.FK_Incidents_History_Worker" />
+        <AssociationConnector Association="Enterprice_incidents__Model.FK_Worker_Post" />
+        <EntityTypeShape EntityType="Enterprice_incidents__Model.sysdiagrams" Width="1.5" PointX="0.875" PointY="1.5" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

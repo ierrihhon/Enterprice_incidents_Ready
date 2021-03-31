@@ -1,0 +1,238 @@
+﻿<Window x:Class="Enterprice_incidents.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Enterprice_incidents"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="MainWindow" 
+        Height="720" Width="800" 
+        WindowStyle="None"
+        IsVisibleChanged="Window_IsVisibleChanged">
+
+    <Window.Resources>
+        <Style x:Key="BtnStyle" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" BorderThickness="0" BorderBrush="Black"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="PreviewMouseDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                            Duration="0:0:0.100" To="2 2 0 0"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="PreviewMouseUp">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetProperty="Margin"
+                                                            Duration="0:0:0.150" To="0 0 0 0"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF3E7BC5" Offset="0"/>
+                <GradientStop Color="#FF3E7BC5" Offset="1"/>
+                <GradientStop Color="#FF2C4A6E" Offset="0.538"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Разлиновка -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Левый бок окна -->
+
+        <StackPanel x:Name="LeftSidePanel"
+                    Grid.Column="0"
+                    Grid.RowSpan="4">
+            
+        </StackPanel>
+
+
+        <!-- Шапка -->
+
+        <StackPanel x:Name="TitlePanel"
+                    Grid.Row="0" Grid.Column="1">
+
+            <TextBlock x:Name="TitleBlock"
+                       Text="Система учёта инцидентов на предприятии"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       Margin="0 40 0 0"/>
+
+        </StackPanel>
+
+        <!-- ListView -->
+
+        <StackPanel x:Name="ListViewPanel"
+                    Grid.Row="1" Grid.Column="1"
+                    Background="White">
+
+            <ListView x:Name="IncidentListView"
+                      Grid.Row="1"
+                      BorderBrush="Black"
+                      BorderThickness="1">
+
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="№" Width="25" DisplayMemberBinding="{Binding Path=Id}" />
+                        <GridViewColumn Header="ФИО ответственного" Width="190" DisplayMemberBinding="{Binding Path=ViewFIO}" />
+                        <GridViewColumn Header="Название инцидента" Width="150" DisplayMemberBinding="{Binding Path=IncidentName}" />
+                        <GridViewColumn Header="Тип инцидента" Width="115" DisplayMemberBinding="{Binding Path=ImportanceOfIncident}" />
+                        <GridViewColumn Header="Дата и время" Width="110" DisplayMemberBinding="{Binding Path=DateOfIncident}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </StackPanel>
+
+
+
+
+
+        <!-- Панель фильтров -->
+
+        <StackPanel x:Name="FiltersPanel"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    Orientation="Horizontal">
+
+
+            <TextBlock Text="Тип инцидента:"
+                       FontSize="17"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="White"
+                       Width="120"
+                       Height="30"
+                       Margin="30 15 0 0"/>
+
+            <ComboBox x:Name="IncidentType_Cmb"
+                      Width="100" 
+                      Height="25"
+                      VerticalContentAlignment="Center"
+                      HorizontalAlignment="Left"
+                      Margin="10 10 20 0"
+                      SelectionChanged="IncidentType_Cmb_SelectionChanged"/>
+
+
+            <TextBlock Text="Дата по:"
+                       FontSize="18"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="White"
+                       Width="100"
+                       Height="30"
+                       Margin="10 15 0 0"/>
+
+
+            <ComboBox x:Name="DateTime_Cmb"
+                      Width="100" 
+                      Height="30"
+                      VerticalContentAlignment="Center"
+                      HorizontalAlignment="Left"
+                      Margin="5 10 20 0"
+                      SelectionChanged="DateTime_Cmb_SelectionChanged"/>
+
+        </StackPanel>
+
+
+
+
+        <!-- Панель кнопок -->
+
+        <StackPanel x:Name="ButtonsPanel"
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    Orientation="Horizontal">
+
+            <Border Width="150" Height="40"
+                    CornerRadius="2"
+                    BorderThickness="1"
+                    Background="Black"
+                    Margin="80 0 40 0">
+
+                <Button x:Name="add_btn"
+                        Style="{StaticResource BtnStyle}"
+                        Content="Добавить"
+                        FontSize="16"
+                        Click="add_btn_Click">
+                </Button>
+                
+            </Border>
+
+
+
+            <Border Width="150" Height="40"
+                    CornerRadius="2"
+                    BorderThickness="1"
+                    Background="Black"
+                    Margin="80 0 0 0">
+
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="BorderBrush" Value="#FF333842"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Button x:Name="delete_btn"
+                        Style="{StaticResource BtnStyle}"
+                        Content="Удалить"
+                        FontSize="16"
+                        Click="delete_btn_Click">
+                    
+                </Button>
+            </Border>
+            
+        </StackPanel>
+
+
+
+        <!-- Правый бок окна  -->
+
+        <StackPanel x:Name="RightSidePanel"
+                    Grid.Column="2"
+                    Grid.RowSpan="4">
+
+        </StackPanel>
+
+    </Grid>
+</Window>
