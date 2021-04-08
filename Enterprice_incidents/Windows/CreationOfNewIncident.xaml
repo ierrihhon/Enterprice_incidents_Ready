@@ -55,9 +55,9 @@
 
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF3E7BC5" Offset="0"/>
-                <GradientStop Color="#FF3E7BC5" Offset="1"/>
-                <GradientStop Color="#FF2C4A6E" Offset="0.538"/>
+                <GradientStop Color="#FF2271D1" Offset="0"/>
+                <GradientStop Color="#FF387CD0" Offset="1"/>
+                <GradientStop Color="#FF184F91" Offset="0.538"/>
             </LinearGradientBrush>
         </Grid.Background>
 
@@ -110,7 +110,7 @@
 
                 <Button x:Name="choosePerson"
                         Style="{StaticResource BtnStyle}"
-                        Content="Выбран"
+                        Content="Выбрать"
                         FontSize="16"
                         Click="choosePerson_Click"/>
                 
@@ -205,7 +205,7 @@
                     Grid.ColumnSpan="2"
                     Orientation="Horizontal">
 
-            <Border Width="120" Height="40"
+            <Border Width="120" Height="35"
                     CornerRadius="2"
                     BorderThickness="1"
                     Background="Black"
@@ -221,7 +221,7 @@
 
 
 
-            <Border Width="120" Height="40"
+            <Border Width="120" Height="35"
                     CornerRadius="2"
                     BorderThickness="1"
                     Background="Black"
@@ -308,7 +308,7 @@
                     CornerRadius="2"
                     BorderThickness="1"
                     Background="Black"
-                    Margin="100 5 0 0">
+                    Margin="140 5 0 0">
 
                 <Button x:Name="selectWorker_Ok_Btn"
                         Style="{StaticResource BtnStyle}"
@@ -322,7 +322,7 @@
                     CornerRadius="2"
                     BorderThickness="1"
                     Background="Black"
-                    Margin="150 5 0 0">
+                    Margin="140 5 0 0">
 
                 <Button x:Name="selectWorker_Cancel_Btn"
                         Style="{StaticResource BtnStyle}"

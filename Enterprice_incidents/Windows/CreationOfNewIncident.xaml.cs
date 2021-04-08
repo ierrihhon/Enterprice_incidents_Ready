@@ -69,10 +69,6 @@ namespace Enterprice_incidents.Windows
         private void choosePerson_Click(object sender, RoutedEventArgs e)
         {
             this.Width = 1100;
-
-            //SelectWorkerWindow selectWorkerWindow = new SelectWorkerWindow();
-            //selectWorkerWindow.ShowDialog();
-            //this.Show();
         }
 
         private void saveIncident_Btn_Click(object sender, RoutedEventArgs e)
@@ -97,7 +93,7 @@ namespace Enterprice_incidents.Windows
 
             DataClass.Context.Incidents_History.Add(new Incidents_History()
             {
-                IdIncident = 1,  //selectIncident.Id,
+                IdIncident = chooseIncidentType_Cmb.SelectedIndex + 1,  //selectIncident.Id,
                 IdWorker = selectWorker.Id,
                 DateOfIncident = incidentDate_Picker.SelectedDate.Value.Date,
                 IncidentName = chooseIncident_Cmb.Text,
@@ -109,8 +105,6 @@ namespace Enterprice_incidents.Windows
             {
                 DataClass.Context.SaveChanges();
                 MessageBox.Show("Запись об инциденте создана.", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-                //Enterprice_incidents_Entities.getContext().ChangeTracker.Entries().ToList().ForEach(i => i.Reload());
-                //IncidentListView.ItemsSource = Enterprice_incidents_Entities.getContext().Incidents_History.ToList();
                 this.Close();
             }
             catch (Exception ex)

@@ -51,9 +51,9 @@
 
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF3E7BC5" Offset="0"/>
-                <GradientStop Color="#FF3E7BC5" Offset="1"/>
-                <GradientStop Color="#FF2C4A6E" Offset="0.538"/>
+                <GradientStop Color="#FF2271D1" Offset="0"/>
+                <GradientStop Color="#FF387CD0" Offset="1"/>
+                <GradientStop Color="#FF184F91" Offset="0.538"/>
             </LinearGradientBrush>
         </Grid.Background>
 
@@ -76,7 +76,7 @@
         <StackPanel x:Name="LeftSidePanel"
                     Grid.Column="0"
                     Grid.RowSpan="4">
-            
+
         </StackPanel>
 
 
@@ -189,9 +189,8 @@
                         Style="{StaticResource BtnStyle}"
                         Content="Добавить"
                         FontSize="16"
-                        Click="add_btn_Click">
-                </Button>
-                
+                        Click="add_btn_Click"/>
+
             </Border>
 
 
@@ -218,10 +217,10 @@
                         Content="Удалить"
                         FontSize="16"
                         Click="delete_btn_Click">
-                    
+
                 </Button>
             </Border>
-            
+
         </StackPanel>
 
 
