@@ -141,19 +141,19 @@ namespace Enterprice_incidents
                 MessageBox.Show("Выберите запись для удаления", "Инцидент не выбран", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            else if (IncidentListView.SelectedItem is Incidents_History incidents_history)
+            else if (IncidentListView.SelectedItem is View_Incidents view_Incidents)
             {
                 var result = MessageBox.Show("Удалить выбранную запись?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     Context.Incidents_History.Remove(Context.Incidents_History.
-                        Where(i => i.Id == incidents_history.Id).FirstOrDefault());
+                        Where(i => i.Id == view_Incidents.Id).FirstOrDefault());
                     Context.SaveChanges();
 
                     MessageBox.Show("Запись удалена", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    IncidentListView.ItemsSource = Context.Incidents_History.ToList();
+                    IncidentListView.ItemsSource = Context.View_Incidents.ToList();
                 }
 
                 else if (result == MessageBoxResult.No)
