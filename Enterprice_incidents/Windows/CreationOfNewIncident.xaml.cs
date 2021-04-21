@@ -66,13 +66,24 @@ namespace Enterprice_incidents.Windows
             selectWorkerListView.ItemsSource = searchListWorker.Where(i => i.GetFIO.ToLower().Contains(search_Box.Text.ToLower()));
         }
 
-        private void choosePerson_Click(object sender, RoutedEventArgs e)
+        private void choosePerson_Btn_Click(object sender, RoutedEventArgs e)
         {
             this.Width = 1100;
         }
 
+        private void cleanWorker_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            responsibleWorker_Box.Text = null;
+        }
+
         private void saveIncident_Btn_Click(object sender, RoutedEventArgs e)
         {
+            if (responsibleWorker_Box.Text == null)
+            {
+                MessageBox.Show("Выберите сотрудника!", "Сотрудник не выбран", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             if (chooseIncident_Cmb.SelectedItem == null)
             {
                 MessageBox.Show("Укажите инцидент!", "Инцидент не выбран", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -123,9 +134,17 @@ namespace Enterprice_incidents.Windows
         {
             selectWorker = selectWorkerListView.SelectedItem as Worker;
 
-            responsibleWorker_Box.Text = selectWorker.FIO;
+            if (selectWorker == null)
+            {
+                MessageBox.Show("Сотрудник не выбран.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (selectWorker == selectWorkerListView.SelectedItem as Worker)
+            {
+                responsibleWorker_Box.Text = selectWorker.FIO;
 
-            this.Width = 400;
+                this.Width = 400;
+            } 
         }
 
         private void selectWorker_Cancel_Btn_Click(object sender, RoutedEventArgs e)

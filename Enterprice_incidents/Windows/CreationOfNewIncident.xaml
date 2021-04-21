@@ -108,11 +108,11 @@
                     Background="Black"
                     Margin="0 15 0 0">
 
-                <Button x:Name="choosePerson"
+                <Button x:Name="choosePerson_Btn"
                         Style="{StaticResource BtnStyle}"
                         Content="Выбрать"
                         FontSize="16"
-                        Click="choosePerson_Click"/>
+                        Click="choosePerson_Btn_Click"/>
                 
             </Border>
             
@@ -171,12 +171,28 @@
                         Height="25"
                         Width="100"/>
 
+            <Button x:Name="cleanWorker_Btn"
+                    Height="15"
+                    Width="15"
+                    HorizontalAlignment="Left"
+                    Background="White"
+                    Margin="0 -10 0 0"
+                    Click="cleanWorker_Btn_Click">
+                
+                <Image Source="/Enterprice_incidents;component/img/Cross.png"
+                       Height="15"
+                       Width="15"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+                
+            </Button>
+            
 
 
             <TextBlock Text="Поля с '*' - обязательны для заполнения"
                        FontSize="12"
                        Foreground="#FFA5A7AE"
-                       Margin="5 20 10 0"/>
+                       Margin="5 10 10 0"/>
 
 
 
@@ -291,7 +307,7 @@
                         <GridViewColumn Header="№ работника" Width="80" DisplayMemberBinding="{Binding Path=Id}"/>
                         <GridViewColumn Header="Имя" Width="90" DisplayMemberBinding="{Binding Path=FName}"/>
                         <GridViewColumn Header="Фамилия" Width="100" DisplayMemberBinding="{Binding Path=SName}"/>
-                        <GridViewColumn Header="Отчество" Width="120" DisplayMemberBinding="{Binding Path=LName}"/>
+                        <GridViewColumn Header="Отчество" Width="110" DisplayMemberBinding="{Binding Path=LName}"/>
                         <GridViewColumn Header="Электронная почта" Width="165" DisplayMemberBinding="{Binding Path=Email}"/>
                         <GridViewColumn Header="Телефон" Width="140" DisplayMemberBinding="{Binding Path=Phone}"/>
                     </GridView>

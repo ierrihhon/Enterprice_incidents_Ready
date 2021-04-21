@@ -40,15 +40,12 @@ namespace Enterprice_incidents
 
             List<string> dateSort = new List<string>() { "---", "Возрастанию", "Убыванию" };
 
-            // List<Incident_Type> incidents_Histories = DataClass.Context.Incident_Type.ToList();
-
             IncidentType_Cmb.ItemsSource = incidentTypeSort;
             IncidentType_Cmb.SelectedIndex = 0;
 
             DateTime_Cmb.ItemsSource = dateSort;
             DateTime_Cmb.SelectedIndex = 0;
 
-            //UpdateListView(); // динамическое обновление listView без перезапуска приложения
         }
 
         public void Filter()
@@ -93,44 +90,14 @@ namespace Enterprice_incidents
                     break;
             }
 
-            //switch (IncidentType_Cmb.SelectedIndex)
-            //{
-            //    case 0:
-            //        IncidentListView.ItemsSource = comboboxFilter;
-            //        break;
-
-            //    case 1:
-            //        IncidentListView.ItemsSource = comboboxFilter.Where(i => i);
-            //        break;
-
-            //    default:
-            //        IncidentListView.ItemsSource = comboboxFilter;
-            //        break;
-            //}
-
             IncidentListView.ItemsSource = comboboxFilter;
         }
-
-        //public static ObservableCollection<Incidents_History  > Get_InsHis_View()
-        //{
-        //    Enterprice_incidents_Entities context = new Enterprice_incidents_Entities();
-
-        //    return new ObservableCollection<Incidents_History>
-        //        (context.Incidents_History.ToList<Incidents_History>());
-        //}
-
-        //private ObservableCollection<Incidents_History> incident_history;
-
-        //private void UpdateListView()
-        //{
-        //    incident_history = MainWindow.Get_InsHis_View();
-        //    IncidentListView.ItemsSource = DataClass.Context.Incidents_History.ToList();
-        //}
 
         private void add_btn_Click(object sender, RoutedEventArgs e)
         {
             CreationOfNewIncident creationOfNewIncident = new CreationOfNewIncident();
             creationOfNewIncident.ShowDialog();
+            IncidentListView.ItemsSource = Context.View_Incidents.ToList();
             this.Show();
         }
 
@@ -151,7 +118,7 @@ namespace Enterprice_incidents
                         Where(i => i.Id == view_Incidents.Id).FirstOrDefault());
                     Context.SaveChanges();
 
-                    MessageBox.Show("Запись удалена", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Запись удалена.", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     IncidentListView.ItemsSource = Context.View_Incidents.ToList();
                 }
