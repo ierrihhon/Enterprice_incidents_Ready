@@ -230,7 +230,7 @@
                 <Button x:Name="saveIncident_Btn"
                         Style="{StaticResource BtnStyle}"
                         Content="Создать"
-                        FontSize="16"
+                        FontSize="18"
                         Click="saveIncident_Btn_Click"/>
                 
             </Border>
@@ -246,7 +246,7 @@
                 <Button x:Name="cancelIncident_Btn"
                         Style="{StaticResource BtnStyle}"
                         Content="Отмена"
-                        FontSize="16"
+                        FontSize="18"
                         Click="cancelIncident_Btn_Click"/>
                 
             </Border>
@@ -328,7 +328,7 @@
 
                 <Button x:Name="selectWorker_Ok_Btn"
                         Style="{StaticResource BtnStyle}"
-                        Content="Выбрать"
+                        Content="Подтвердить"
                         FontSize="18"
                         Click="selectWorker_Ok_Btn_Click"/>
                 

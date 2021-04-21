@@ -121,8 +121,7 @@ namespace Enterprice_incidents.Windows
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString());
-            }
-            
+            } 
         }
 
         private void cancelIncident_Btn_Click(object sender, RoutedEventArgs e)
